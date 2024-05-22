@@ -1,29 +1,21 @@
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
-import * as admin from 'firebase-admin';
-import { ConfigService } from '@nestjs/config';
+import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 
 async function bootstrap() {
 
   const app = await NestFactory.create(AppModule);
-  const configService = app.get(ConfigService);
 
-  const useEmulator = configService.get('USE_FIRESTORE_EMULATOR') === 'true';
+  // swagger
+  const config = new DocumentBuilder()
+    .setTitle('User API')
+    .setDescription('User 周りのAPIドキュメント')
+    .setVersion('1.0')
+    .addTag('user')
+    .build()
 
-  if (useEmulator) {
-    admin.initializeApp();
-    admin.firestore().settings({
-      host: 'localhost:8080',
-      ssl: false,
-    });
-  } else {
-    const serviceAccount = configService.get('FIREBASE_SERVICE_ACCOUNT');
-    const parsedServiceAccount = JSON.parse(serviceAccount);
-    admin.initializeApp({
-      credential: admin.credential.cert(parsedServiceAccount),
-    });
-  }
-
+  const document = SwaggerModule.createDocument(app, config)
+  SwaggerModule.setup('api', app, document)
 
   await app.listen(3000);
 }
