@@ -5,13 +5,13 @@ FROM node:lts
 WORKDIR /usr/src/app
 
 # アプリケーションの依存関係をインストールするためのファイルをコピーする
-COPY package*.json ./
+COPY auth-service/package*.json ./
 
 # アプリケーションの依存関係をインストールする
 RUN npm install
 
 # アプリケーションのソースをコピーする
-COPY .. .
+COPY auth-service .
 
 # アプリケーションを実行する
 CMD [ "npm", "start" ]
