@@ -11,7 +11,7 @@ COPY package*.json ./
 RUN npm install
 
 # アプリケーションのソースをコピーする
-COPY . .
+COPY .. .
 
 # アプリケーションを実行する
 CMD [ "npm", "start" ]
