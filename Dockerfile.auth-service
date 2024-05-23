@@ -13,5 +13,7 @@ RUN npm install
 # アプリケーションのソースをコピーする
 COPY auth-service .
 
+EXPOSE 3000
+
 # アプリケーションを実行する
 CMD [ "npm", "start" ]

@@ -1,9 +1,11 @@
 version: '3'
 services:
   auth-service:
-    build: ./auth-service
+    build:
+      context: .
+      dockerfile: ./Dockerfile.auth-service
     ports:
-      - "3001:3001"
+      - "3001:3000"
     volumes:
       - ./auth-service:/usr/src/app
     command: npm start
@@ -11,30 +13,30 @@ services:
       - NODE_ENV=development
     networks:
       - shared
-
-  money-service:
-    build: ./money-service
-    ports:
-      - "3002:3002"
-    volumes:
-      - ./money-service:/usr/src/app
-    command: npm start
-    environment:
-      - NODE_ENV=development
-    networks:
-      - shared
-
-  share-service:
-    build: ./share-service
-    ports:
-      - "3003:3003"
-    volumes:
-      - ./share-service:/usr/src/app
-    command: npm start
-    environment:
-      - NODE_ENV=development
-    networks:
-      - shared
+#
+#  money-service:
+#    build: ./money-service
+#    ports:
+#      - "3002:3002"
+#    volumes:
+#      - ./money-service:/usr/src/app
+#    command: npm start
+#    environment:
+#      - NODE_ENV=development
+#    networks:
+#      - shared
+#
+#  share-service:
+#    build: ./share-service
+#    ports:
+#      - "3003:3003"
+#    volumes:
+#      - ./share-service:/usr/src/app
+#    command: npm start
+#    environment:
+#      - NODE_ENV=development
+#    networks:
+#      - shared
 
 networks:
   shared:
