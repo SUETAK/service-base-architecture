@@ -21,10 +21,12 @@ import { logger } from '@google-cloud/firestore/build/src/logger';
         if (useEmulator) {
           firestore = new Firestore({
             projectId: 'your-project-id',
-            servicePath: 'localhost',
             port: 8080,
             ssl: false,
+            host: 'firestore-emulator',
           });
+          console.log(firestore.databaseId)
+          console.log(firestore.listCollections())
         } else {
           console.log('Using Firestore production instance');
           const projectId = configService.get('PROJECT_ID');

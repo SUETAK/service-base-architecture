@@ -1,0 +1,19 @@
+# Node.js の LTS バージョンをベースにする
+FROM node:lts
+
+# アプリケーションディレクトリを作成する
+WORKDIR /usr/src/app
+
+# アプリケーションの依存関係をインストールするためのファイルをコピーする
+COPY money-service/package*.json ./
+
+# アプリケーションの依存関係をインストールする
+RUN npm install
+
+# アプリケーションのソースをコピーする
+COPY money-service .
+
+EXPOSE 3002
+
+# アプリケーションを実行する
+CMD [ "npm", "start" ]

@@ -14,6 +14,7 @@ export class UserController {
   @ApiResponse({status: 201, description: 'The user has been successfully created'})
   @ApiBody({type: CreateUserDto})
   async create(@Body() createUserDto: CreateUserDto) {
+    console.log(createUserDto)
     return this.userService.createUser(createUserDto);
   }
 }

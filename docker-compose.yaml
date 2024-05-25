@@ -5,27 +5,35 @@ services:
       context: .
       dockerfile: Dockerfile
     ports:
-      - "3001:3000"
+      - "3000:3000"
     volumes:
       - ./auth-service:/usr/src/app
     command: npm start
     environment:
       - NODE_ENV=development
+    depends_on:
+      - firestore-emulator
+
     networks:
-      - shared
-#
-#  money-service:
-#    build: ./money-service
-#    ports:
-#      - "3002:3002"
-#    volumes:
-#      - ./money-service:/usr/src/app
-#    command: npm start
-#    environment:
-#      - NODE_ENV=development
-#    networks:
-#      - shared
-#
+      - emulator-network
+
+  money-service:
+    build:
+      context: .
+      dockerfile: Dockerfile.money
+    ports:
+      - "3002:3002"
+    volumes:
+      - ./money-service:/usr/src/app
+    command: npm start
+    environment:
+      - NODE_ENV=development
+    depends_on:
+      - firestore-emulator
+
+    networks:
+      - emulator-network
+
 #  share-service:
 #    build: ./share-service
 #    ports:
@@ -38,5 +46,15 @@ services:
 #    networks:
 #      - shared
 
+
+  firestore-emulator:
+    image: gcr.io/google.com/cloudsdktool/cloud-sdk:316.0.0-emulators
+    command: gcloud beta emulators firestore start --host-port=0.0.0.0:8080
+    ports:
+      - "8080:8080"
+    networks:
+      - emulator-network
+
 networks:
-  shared:
+  emulator-network:
+    driver: bridge

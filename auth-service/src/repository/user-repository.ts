@@ -17,6 +17,7 @@ export class UserRepository {
   async createUser(name: string, email: string) {
     const id = ulid()
     const user:User = {id , email, name}
-    await this.db.collection('users').doc(user.id).set(user);
+    const writeResult = await this.db.collection('users').doc(user.id).set(user);
+    console.log(`User with ID: ${id} added at: ${writeResult.writeTime.toDate()}`);
   }
 }
