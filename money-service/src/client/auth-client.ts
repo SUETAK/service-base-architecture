@@ -1,5 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import axios from 'axios';
+import * as process from 'node:process';
 
 
 @Injectable()
@@ -7,7 +8,7 @@ export class AuthClient {
   private readonly authServiceUrl: string;
 
   constructor() {
-    this.authServiceUrl = 'http://auth-service:3000';
+    this.authServiceUrl = process.env.AUTH_SERVICE_URL || 'http://auth-service:3000';
   }
 
 

@@ -5,7 +5,6 @@ import { UserRepository } from './repository/user-repository';
 import { UserController } from './user.controller';
 import { Firestore } from '@google-cloud/firestore';
 import { ConfigModule, ConfigService } from '@nestjs/config';
-import { logger } from '@google-cloud/firestore/build/src/logger';
 
 @Module({
   imports: [ConfigModule.forRoot({ envFilePath: ['.env', '.env.local'] })],
